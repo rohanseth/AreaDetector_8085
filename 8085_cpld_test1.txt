@@ -1,0 +1,74 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date:    22:52:29 05/05/2013 
+-- Design Name: 
+-- Module Name:    testrun1 - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity testrun1 is
+    Port ( IP : in  STD_LOGIC_VECTOR (5 downto 0);
+           OP : out  STD_LOGIC_VECTOR (5 downto 0);
+			  io	: in STD_LOGIC;
+			  a8 : in STD_LOGIC;
+			  a9 : in STD_LOGIC;
+			  a15 : in STD_LOGIC;
+			  nwr : in STD_LOGIC;
+			  nrd : in STD_LOGIC;
+			  nmrd : out STD_LOGIC;
+			  nmwr : out STD_LOGIC;
+			  na15 : out STD_LOGIC;
+			  nior0 : out STD_LOGIC;
+			  nior1 : out STD_LOGIC;
+			  nior2 : out STD_LOGIC;
+			  nrst : out STD_LOGIC);
+end testrun1;
+
+architecture Behavioral of testrun1 is
+
+begin
+
+Latch_Data: process(IP)
+begin
+if (((io and a8)and (not nwr)) = '1') then
+OP <= IP;
+-- If Latch_Open = 0, then Latched_Data keeps its old value,
+-- i.e. the latch is closed.
+end if;
+end process Latch_Data;
+
+na15 <= not a15;
+nior0 <= not((io and (not(a8)) and (not(a9)))and (not nrd));
+nior1 <= not((io and (a8) and (not(a9)))and (not nrd));
+nior2 <= not((io and (not(a8)) and (a9))and (not nrd));
+nmrd <= not((not io)and (not nrd));
+nmwr <= not((not io)and (not nwr));
+ 
+end Behavioral;
+
+
+
+
